@@ -13,9 +13,8 @@ fun whatFoldDoes(): Int {
 }
 
 fun Shop.getSetOfProductsOrderedByEveryCustomer(): Set<Product> {
-    // Return the set of products ordered by every customer
+    var allOrderedProducts = customers.flatMap( { it.orders.flatMap( { it.products })} ).toSet()
     return customers.fold(allOrderedProducts, {
-        orderedByAll, customer ->
-        todoCollectionTask()
+        orderedByAll, customer -> orderedByAll.intersect( customer.orders.flatMap( { it.products } ))
     })
 }
